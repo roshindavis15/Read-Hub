@@ -1,0 +1,26 @@
+{
+  "name": "read-hub",
+  "version": "1.0.0",
+  "description": "Read Ready Hub is a comprehensive book library management application designed to streamline the process of discovering, organizing, and enjoying books. Whether you're an avid reader or a casual book enthusiast, Read Ready Hub provides a centralized platform to explore a vast collection of books",
+  "scripts": {
+    "start": "parcel Frontend/index.html",
+    "build": "parcel build Frontend/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "parcel": "^2.11.0",
+    "postcss": "^8.4.34",
+    "process": "^0.11.10",
+    "tailwindcss": "^3.4.1"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-slick": "^0.30.1",
+    "slick-carousel": "^1.8.1"
+  }
+}
