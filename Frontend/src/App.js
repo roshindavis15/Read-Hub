@@ -3,6 +3,8 @@ import ReactDOM, { createRoot } from "react-dom/client";
 import HomeScreen  from "./Components/screens/HomeScreen";
 import Navbar from "./Components/Navbar";
 import Carousel from "./Components/Carousel";
+import Footer from "./Components/Footer";
+
 
 
 
@@ -15,6 +17,8 @@ const AppLyout=()=>{
         <div className="pt-12">
         <HomeScreen/>
         </div>
+        <Footer/>
+     
         
         </>
     )

@@ -1,9 +1,11 @@
 import React from "react";
+import {v4 as uuid} from "uuid"
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 const Carousel = ({ slides }) => {
+    console.log('Slides:', slides);
     const settings = {
         dots: true,
         infinite: true,
@@ -17,13 +19,11 @@ const Carousel = ({ slides }) => {
 
     return (
         <div className="container mx-auto">
-            
             <Slider {...settings}>
-                {slides.map((slide, index) => (
+                {slides.map((slide) => (
                     <div key={slide.id}>
-                        <img src={slide.imageUrl} alt={slide.id} className="w-full" />
-                        <div className="text-center"><h1 className="text-3xl font-bold mb-4">{slide.content}</h1></div>
-                        
+                        {slide.content && <h1 className="text-3xl font-bold mb-4">{slide.content}</h1>}
+                        {slide.imageUrl && <img src={slide.imageUrl} alt={slide.id} className="w-full" />}
                     </div>
                 ))}
             </Slider>
