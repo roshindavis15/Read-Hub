@@ -3,16 +3,19 @@ const express=require('express');
 const mongoose =require('mongoose')
 
 const app=express();
+// Middleware to parse JSON bodies
+app.use(express.json());
 
+// Middleware to parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
+const connectDB = require('./config/db');
 const PORT=process.env.PORT || 3000;
 app.listen(PORT,()=>{
     console.log(`Server is running on the port ${PORT}`);
 })
 
+connectDB();
 
-mongoose.connect(process.env.DATABASE_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(()=>console.log("MongoDB connecteed"))
-.catch(err=> console.error("Error connecting to MongoDB:",err));
+
+const userRoute=require('./routes/userRoute');
+app.use('/',userRoute);
