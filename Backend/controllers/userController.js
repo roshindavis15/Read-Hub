@@ -6,7 +6,7 @@ exports.registerUser=async(req,res)=>{
     try {
         console.log("req.body:",req.body)
         //extract user data from req body
-        const {name,email,mobile,password}=req.body;
+        const {name,email,mobile,password}=req.validatedUserData;
 
         //check if user already exist
         const userExist= await userHelper.checkExistingUser(email);
