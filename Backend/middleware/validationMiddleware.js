@@ -9,6 +9,9 @@ const userRegistrationSchema=z.object({
 
 const validateUserRegistration=(req,res,next)=>{
     try {
+
+        console.log("reached for validation")
+        console.log("req.body:",req.body)
         const{name,email,mobile,password}=userRegistrationSchema.parse(
             req.body
         );
