@@ -22,7 +22,7 @@ const userModel = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    isVarified: {
+    isVerified: {
         type: Boolean,
         default: false
     },
