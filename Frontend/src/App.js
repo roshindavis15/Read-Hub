@@ -1,31 +1,27 @@
-import React from "react";
-import ReactDOM, { createRoot } from "react-dom/client";
+import React,{useState} from "react";
+import { createRoot } from "react-dom/client";
 import HomeScreen  from "./Components/screens/HomeScreen";
 import Navbar from "./Components/Navbar";
-import Carousel from "./Components/Carousel";
 import Footer from "./Components/Footer";
 
+const AppLayout = () => {
+    const [showModal, setShowModal] = useState(false);
 
+    const toggleModal = () => {
+        setShowModal(!showModal);
+    };
 
-
-
-const AppLyout=()=>{
-    return(
-        
+    return (
         <>
-        <Navbar/>
-        <div className="pt-12">
-        <HomeScreen/>
-        </div>
-        <Footer/>
-     
-        
+            <Navbar toggleModal={toggleModal} />
+            <div className="pt-12">
+                <HomeScreen showModal={showModal} toggleModal={toggleModal} />
+            </div>
+            <Footer />
         </>
-    )
-}   
+    );
+};
 
-const root=createRoot(document.getElementById("root"))
+const root = createRoot(document.getElementById("root"));
 
-root.render(<AppLyout/>)
-
-
+root.render(<AppLayout />);
