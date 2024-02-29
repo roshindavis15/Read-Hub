@@ -1,9 +1,10 @@
 const express=require('express');
-
+const path = require('path');
 const dotenv=require('dotenv');
-dotenv.config();
+dotenv.config({path:'./Backend/.env'});
 
-console.log(process.env.PORT)
+
+console.log("port:",process.env.PORT)
 const mongoose =require('mongoose')
 
 const app=express();

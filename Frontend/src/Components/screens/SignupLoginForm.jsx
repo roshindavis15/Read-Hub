@@ -3,6 +3,30 @@ import React, { useState } from "react";
 
 const SignupLoginForm = () => {
   const [action, setAction] = useState("Sign Up");
+  const [name,setName]=useState("");
+  const [email,setEmail]=useState("");
+  const [mobile,setMobile]=useState("");
+  const [password,setPassword]=useState("");
+  const [error,setError]=useState("");
+  
+  const handleSubmit=async(event)=>{
+    event.preventDefault();
+
+    const response =await fetch("/register",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({name,email,mobile,password})
+    });
+    const data=await response.json();
+    
+    if(response.ok){
+      console.log("connected with backend");
+    }else{
+      setError(data.message);
+    }
+  };
 
   return (
     <div className="container mx-auto max-w-md py-8 bg-white rounded-lg shadow-lg">
@@ -18,6 +42,8 @@ const SignupLoginForm = () => {
             <input
               type="text"
               placeholder="Name"
+              value={name}
+              onChange={(event)=>setName(event.target.value)}
               className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
             />
            
@@ -27,6 +53,8 @@ const SignupLoginForm = () => {
            <input
              type="text"
              placeholder="Mobile"
+             value={mobile}
+             onChange={(event)=>setMobile(event.target.value)}
              className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
            />
           
@@ -39,6 +67,8 @@ const SignupLoginForm = () => {
           <input
             type="email"
             placeholder="Email"
+            value={email}
+            onChange={(event)=>setEmail(event.target.value)}
             className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
           />
         </div>
@@ -48,6 +78,8 @@ const SignupLoginForm = () => {
           <input
             type="password"
             placeholder="Password"
+            value={password}
+            onChange={(event)=>setPassword(event.target.value)}
             className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
           />
         </div>
