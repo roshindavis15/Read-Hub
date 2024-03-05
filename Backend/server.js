@@ -2,7 +2,7 @@ const express=require('express');
 const path = require('path');
 const dotenv=require('dotenv');
 dotenv.config({path:'./Backend/.env'});
-
+const cors=require('cors');
 
 console.log("port:",process.env.PORT)
 const mongoose =require('mongoose')
@@ -10,6 +10,7 @@ const mongoose =require('mongoose')
 const app=express();
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(cors());
 
 // Middleware to parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));

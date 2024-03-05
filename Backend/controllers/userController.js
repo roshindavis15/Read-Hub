@@ -10,7 +10,7 @@ const jwt=require('jsonwebtoken');
 
 exports.registerUser = async (req, res) => {
     try {
-        console.log("req.body:", req.body)
+        console.log("req.body after validation:", req.body)
         //extract user data from req body
         const { name, email, mobile, password } = req.validatedUserData;
 
