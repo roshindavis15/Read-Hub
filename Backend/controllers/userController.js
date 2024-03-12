@@ -2,8 +2,7 @@ const User = require('../models/userModel');
 const userHelper = require('../helpers/userHelper');
 const bcrypt = require('bcrypt');
 const OTP=require('../models/otpModel');
-
-
+const moment=require('moment-timezone')
 const jwt=require('jsonwebtoken');
 
 
@@ -67,7 +66,6 @@ exports.loginUser= async(req,res)=>{
         }
         // generating token
         
-
         const token=jwt.sign({userId:user._id},process.env.JWT_SECRET,{expiresIn:'1h'});
         console.log("token:",token)
         //sending the token in response
@@ -84,26 +82,44 @@ exports.verifyingOtp = async (req, res) => {
     try {
         const { email, otp } = req.body;
 
-        const otpRecord = await OTP.findOne({ email, otp });
+        // Find the OTP record based on the email
+        const otpRecord = await OTP.findOne({ email });
+        console.log("Otp record:",otpRecord);
+
         if (!otpRecord) {
             return res.status(400).json({ message: 'Invalid OTP' });
         }
-        const currentTime=new Date();
-        const expirationTime=new Date(otpRecord.expiresAt);
 
-        // Convert expiration time to the local time zone
-        const expirationTimeLocal = new Date(expirationTime.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
-        // If OTP expired
-        if (  currentTime<expirationTime) {
-            return res.status(400).json({ message: 'OTP expired' });
+        // Check if the OTP has expired 
+        const otpCreationTime = otpRecord.createdAt.getTime(); 
+        const currentTimestamp = Date.now();
+        const otpExpiryDuration = 2 * 60 * 1000;
+        console.log("otpCreationTime:",otpCreationTime);
+        console.log("currentTimestamp:",currentTimestamp);
+        console.log("otpExpiryDuration:",otpExpiryDuration);
+
+        if (currentTimestamp - otpCreationTime > otpExpiryDuration) {
+            console.log("expired otp");
+            return res.status(400).json({ message: 'OTP has expired' });
         }
+        if (otpRecord.otp !== otp) {
+            return res.status(400).json({ message: 'Invalid OTP' });
+        }
+
+        // Delete the OTP record from the database
+        await OTP.deleteOne({ email });
+
+        // Update the user's isVerified field
         const user = await User.findOneAndUpdate(
             { email },
-            { $set: { IsVerified: true } },
+            { $set: { isVerified: true } },
             { new: true }
         );
+        console.log("user:",user);
 
-        await OTP.deleteOne({ email: otp });
+        if (!user) {
+            return res.status(400).json({ message: 'User not found' });
+        }
 
         res.status(200).json({ message: 'OTP verified successfully' });
     } catch (error) {
@@ -111,3 +127,17 @@ exports.verifyingOtp = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+
+exports.resendOtp=async(req,res)=>{
+    try {
+        const{email}=req.body;
+        const generatedOtp=await userHelper.generatingOtp();
+        await OTP.create({email,otp:generatedOtp});
+        await userHelper.sendOtp(email,generatedOtp);
+        res.status(200).json({message:'OTP resent successfully'})
+    } catch (error) {
+        console.error('Error resending OTP:',error);
+        res.status(500).json({message:'Internal Server Error'})
+    }
+}

@@ -10,7 +10,7 @@ const authMiddleware=(req,res,next)=>{
     }
     try {
         //verifying token
-        const decoded=jwt.verify(token.split('')[1],process.env.JWT_SECRET);
+        const decoded=jwt.verify(token.split(' ')[1],process.env.JWT_SECRET);
 
         //adding the decoded token payload to the request object
         req.user=decoded;
