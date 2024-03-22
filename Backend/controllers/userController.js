@@ -78,6 +78,7 @@ exports.loginUser= async(req,res)=>{
 }
 
 
+
 exports.verifyingOtp = async (req, res) => {
     try {
         const { email, otp } = req.body;
@@ -140,4 +141,9 @@ exports.resendOtp=async(req,res)=>{
         console.error('Error resending OTP:',error);
         res.status(500).json({message:'Internal Server Error'})
     }
+}
+
+
+exports.logoutUser=async(req,res)=>{
+    
 }

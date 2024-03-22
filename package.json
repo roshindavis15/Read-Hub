@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Read Ready Hub is a comprehensive book library management application designed to streamline the process of discovering, organizing, and enjoying books. Whether you're an avid reader or a casual book enthusiast, Read Ready Hub provides a centralized platform to explore a vast collection of books",
   "scripts": {
-    "start":"concurrently \"npm run start:frontend\" \"npm run start:backend\"",  
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "start:frontend": "parcel Frontend/index.html --port=1234",
-    "start:backend":"node Backend/server.js --port=3001",
+    "start:backend": "node Backend/server.js --port=3001",
     "build": "parcel build Frontend/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,11 +21,15 @@
     "tailwindcss": "^3.4.1"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.2",
     "dotenv": "^16.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.0",
     "react-slick": "^0.30.1",
+    "redux": "^5.0.1",
+    "redux-thunk": "^3.1.0",
     "slick-carousel": "^1.8.1",
     "uuid": "^9.0.1"
   }

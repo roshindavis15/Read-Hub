@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import OtpVerification from './OtpVerification'; 
 const port = process.env.PORT || 3000;
+import {useDispatch} from 'react-redux';
+import { loginSuccess,loginFailure } from "../../../redux/actions/authAction";
+
+
+
 
 const SignupLoginForm = () => {
   const [mode, setMode] = useState("signup");
@@ -11,6 +16,7 @@ const SignupLoginForm = () => {
   const [error, setError] = useState("");
   const [isRegistered, setIsRegistered] = useState(false); // State to track registration status
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+  const dispatch=useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,11 +50,15 @@ const SignupLoginForm = () => {
         setIsRegistered(true); // Set isRegistered to true after successful registration
         if (mode === "login") {
           setIsLoggedIn(true); // Set isLoggedIn to true after successful login
+          localStorage.setItem('authToken', responseData.token);
+          dispatch(loginSuccess(responseData.token));
+      
         }
       }
     } catch (error) {
       console.error("Error in handleSubmit:", error);
       setError("An error occurred while submitting the form.");
+      dispatch(loginFailure(error.message));
     }
   };
 
@@ -118,7 +128,7 @@ const SignupLoginForm = () => {
                   value="signup"
                   checked={mode === "signup"}
                   onChange={() => setMode("signup")}
-                />
+                />                                                                                    
                 <span className="ml-2">Sign Up</span>
               </label>
               <label className="cursor-pointer">
@@ -139,7 +149,7 @@ const SignupLoginForm = () => {
             </button>
           </form>
         </div>
-      ) : (
+      ) : (                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
         <div>
           {mode === "signup" ? (
             <OtpVerification email={email} /> // Render OtpVerification component after successful signup
@@ -152,7 +162,7 @@ const SignupLoginForm = () => {
           )}
         </div>
       )}
-    </div>
+    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
   );
 };
 
