@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import logo from "../Components/assets/logo.png";
+import logo from '../assets/logo.png'
 import { Link } from "react-router-dom";
-import Modal from "../Components/Modal";
+import Modal from "./Modal";
 import { UseSelector, useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/actions/authAction";
+import { logout } from '../../../redux/actions/authAction';
 import Swal from 'sweetalert2';
 
 
@@ -23,8 +23,9 @@ const Navbar = ({ toggleModal }) => {
             confirmButtonText:'Yes, log me out'
         }).then((result)=>{
             if(result.isConfirmed){
-                dispatch(logout());
                 localStorage.removeItem('authToken');
+                dispatch(logout());
+        
                 Swal.fire(
                     'Logged Out!',
                     'You have been logged out',

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import slide1 from "../assets/bookimg1.png";
 import slide2 from "../assets/book2.png";
-import Carousel from "../Carousel";
-import FeatureSection from "../FeatureSection";
+import Carousel from "./Carousel";
+import FeatureSection from "./FeatureSection";
 import { v4 as uuidv4 } from 'uuid';
-import Navbar from "../Navbar";
-import Modal from "../Modal";
+import Navbar from "./Navbar";
+import Modal from "./Modal";
 
 const HomeScreen = ({ showModal, toggleModal }) => {
     const slides = [

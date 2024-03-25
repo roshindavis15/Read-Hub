@@ -4,9 +4,6 @@ const port = process.env.PORT || 3000;
 import {useDispatch} from 'react-redux';
 import { loginSuccess,loginFailure } from "../../../redux/actions/authAction";
 
-
-
-
 const SignupLoginForm = () => {
   const [mode, setMode] = useState("signup");
   const [name, setName] = useState("");
@@ -16,6 +13,7 @@ const SignupLoginForm = () => {
   const [error, setError] = useState("");
   const [isRegistered, setIsRegistered] = useState(false); // State to track registration status
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+  const [isAdmin,setIsAdmin]=useState(false);
   const dispatch=useDispatch();
 
   const handleSubmit = async (event) => {
@@ -37,6 +35,7 @@ const SignupLoginForm = () => {
       });
 
       const responseData = await response.json();
+      console.log("responseData:",responseData);
   
       if (!response.ok) {
         setError(responseData.message);
@@ -52,6 +51,8 @@ const SignupLoginForm = () => {
           setIsLoggedIn(true); // Set isLoggedIn to true after successful login
           localStorage.setItem('authToken', responseData.token);
           dispatch(loginSuccess(responseData.token));
+           console.log("isAdmin:",responseData.isAdmin);
+          setIsAdmin(responseData.isAdmin);
       
         }
       }
@@ -61,7 +62,6 @@ const SignupLoginForm = () => {
       dispatch(loginFailure(error.message));
     }
   };
-
   return (
     <div className="container mx-auto max-w-md py-8 bg-white rounded-lg shadow-lg">
       {error && (//render error message if error state is not empty
@@ -151,19 +151,23 @@ const SignupLoginForm = () => {
         </div>
       ) : (                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
         <div>
-          {mode === "signup" ? (
-            <OtpVerification email={email} /> // Render OtpVerification component after successful signup
-          ) : (
-            <div>
-              {/* Render any component you want for post-login experience */}
-              <h2>Welcome, {email}!</h2>
-              {/* You can add more content here */}
-            </div>
-          )}
-        </div>
+  {mode === "signup" ? (
+    <OtpVerification email={email} /> // Render OtpVerification component after successful signup
+  ) : (
+    <div>
+      <h2>Welcome, {email}!</h2>
+      {isAdmin ? (
+        <p>You are an admin.</p> // Render admin-specific content
+      ) : (
+        <p>You are a user.</p> // Render regular user content
       )}
-    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-  );
-};
+    </div>
+  )}
+</div>
 
-export default SignupLoginForm;
+        )}
+      </div>
+    );
+  };
+  
+  export default SignupLoginForm;

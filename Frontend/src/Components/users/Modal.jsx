@@ -1,5 +1,5 @@
 import React from "react";
-import SignupLoginForm from "./screens/SignupLoginForm"
+import SignupLoginForm from "./SignupLoginForm"
 
 const Modal = ({ onClose }) => {
     const stopPropagation = (e) => {

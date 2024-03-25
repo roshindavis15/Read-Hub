@@ -49,6 +49,7 @@ exports.registerUser = async (req, res) => {
 }
 
 
+
 exports.loginUser= async(req,res)=>{
     try {
         console.log("req.body:",req.body)
@@ -64,12 +65,17 @@ exports.loginUser= async(req,res)=>{
         if(!isPasswordValid){
             return res.status(401).json({message:'Incorrect Email or Password'})
         }
+
+        // Check if the user is an admin
+        const isAdmin = user.is_admin;
+        console.log("isAdmin ?",isAdmin);
+        
         // generating token
         
         const token=jwt.sign({userId:user._id},process.env.JWT_SECRET,{expiresIn:'1h'});
         console.log("token:",token)
         //sending the token in response
-        res.status(200).json({token})
+        res.status(200).json({token,isAdmin})
     } catch (error) {
         console.error('Error logging in:',error);
         res.status(500).json({message:'Internal Server error'})
@@ -144,6 +150,4 @@ exports.resendOtp=async(req,res)=>{
 }
 
 
-exports.logoutUser=async(req,res)=>{
-    
-}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
